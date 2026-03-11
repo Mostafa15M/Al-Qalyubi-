@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
+    <meta name="8885eb4b4eca750077d93da13d5a1034b6a85e1c" content="8885eb4b4eca750077d93da13d5a1034b6a85e1c" />
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>مركز القليوبي | نظام الإدارة المتكامل 2026</title>
@@ -29,7 +31,6 @@
         header { padding: 60px 20px 30px; text-align: center; }
         header h1 { font-size: clamp(30px, 7vw, 55px); font-weight: 900; color: #fff; text-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         
-        /* المفتاح السري */
         .title-underline {
             width: 100px; height: 3px; background: linear-gradient(90deg, transparent, var(--premium-gold), transparent);
             margin: 15px auto; cursor: pointer; transition: 0.3s;
@@ -64,7 +65,14 @@
         .sh-color { background: #1a4d2e; border: 1px solid #2ecc71; }
         .mz-color { background: #1a3a5f; border: 1px solid #3498db; }
 
-        /* لوحة الإدارة المتقدمة */
+        /* منطقة الإعلانات المضافة في الأسفل */
+        #ads-section {
+            max-width: 850px; margin: 0 auto 30px; padding: 15px;
+            background: rgba(255,255,255,0.02); border: 1px dashed var(--border-line);
+            border-radius: 15px; text-align: center;
+        }
+        .ads-hint { font-size: 10px; color: var(--premium-gold); opacity: 0.4; letter-spacing: 2px; }
+
         #admin-panel { display: none; max-width: 850px; margin: 20px auto; padding: 30px; background: #080808; border: 1px solid var(--premium-gold); border-radius: 25px; }
         .admin-section { background: #111; padding: 20px; border-radius: 15px; margin-bottom: 20px; border: 1px solid #222; }
         .admin-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 10px; border-bottom: 1px solid #222; }
@@ -122,6 +130,13 @@
                 </div>
             </div>
         </div>
+
+        <div id="ads-section">
+            <span class="ads-hint">إعلانات</span>
+            <div id="google-ads-container">
+                <p style="color: #444; font-size: 12px;">مساحة إعلانية مخصصة</p>
+            </div>
+        </div>
     </div>
 
     <div id="admin-panel">
@@ -145,7 +160,6 @@
     <footer>مركز القليوبي - جميع الحقوق محفوظة 2026</footer>
 
     <script>
-        // البيانات الأساسية (كل الأصناف التي طلبتها)
         const defaultData = {
             "إسفنج مراتب": {
                 unit: "m3",
@@ -164,11 +178,10 @@
         let db = JSON.parse(localStorage.getItem('qalyoubi_db')) || defaultData;
         let currentCat = Object.keys(db)[0];
 
-        // المفتاح السري (كليك يمين على الخط)
         document.getElementById('secret_key').oncontextmenu = function(e) {
             e.preventDefault();
             let p = prompt("كلمة السر:");
-            if (btoa(p) === "MTM1Nzkw") { // 135790
+            if (btoa(p) === "MTM1Nzkw") {
                 document.getElementById('admin-panel').style.display = 'block';
                 document.getElementById('main-app').style.display = 'none';
                 renderAdmin();
@@ -218,12 +231,11 @@
             document.getElementById('total_val').innerText = Math.round(total).toLocaleString();
             document.getElementById('final-panel').style.display = 'block';
             
-            const msg = encodeURIComponent(`طلب من مركز القليوبي:\nالقسم: ${currentCat}\nالصنف: ${document.getElementById('sel_prod').options[document.getElementById('sel_prod').selectedIndex].text}\nالقيمة: ${Math.round(total)} ج.م`);
+            const msg = encodeURIComponent(`استفسار من الموقع:\nالقسم: ${currentCat}\nالصنف: ${document.getElementById('sel_prod').options[document.getElementById('sel_prod').selectedIndex].text}\nالقيمة: ${Math.round(total)} ج.م`);
             document.getElementById('wa_1').href = `https://wa.me/201003316023?text=${msg}`;
             document.getElementById('wa_2').href = `https://wa.me/201012381893?text=${msg}`;
         }
 
-        // وظائف الإدارة
         function renderAdmin() {
             const editor = document.getElementById('admin-editor');
             editor.innerHTML = "";
@@ -231,14 +243,12 @@
                 let sec = document.createElement('div');
                 sec.className = "admin-section";
                 sec.innerHTML = `<h3 style="color:var(--premium-gold)">قسم: ${cat} <button class="btn-del" onclick="deleteCat('${cat}')">حذف القسم</button></h3>`;
-                
                 for (let item in db[cat].items) {
                     let div = document.createElement('div');
                     div.className = "admin-item";
                     div.innerHTML = `<span>${item}</span> <div><input type="number" value="${db[cat].items[item]}" onchange="updatePrice('${cat}','${item}',this.value)"> <button class="btn-del" onclick="deleteItem('${cat}','${item}')">x</button></div>`;
                     sec.appendChild(div);
                 }
-                
                 let addBox = document.createElement('div');
                 addBox.innerHTML = `<input type="text" id="new_item_${cat}" placeholder="اسم صنف جديد" style="width:150px;"> <input type="number" id="new_price_${cat}" placeholder="السعر" style="width:80px;"> <button class="btn-add" onclick="addItem('${cat}')">إضافة صنف</button>`;
                 sec.appendChild(addBox);
@@ -249,19 +259,16 @@
         function updatePrice(c, i, v) { db[c].items[i] = parseFloat(v); save(); }
         function deleteItem(c, i) { delete db[c].items[i]; save(); renderAdmin(); }
         function deleteCat(c) { if(confirm('حذف القسم بالكامل؟')) { delete db[c]; save(); renderAdmin(); } }
-        
         function addItem(c) {
             let n = document.getElementById(`new_item_${c}`).value;
             let p = document.getElementById(`new_price_${c}`).value;
             if(n && p) { db[c].items[n] = parseFloat(p); save(); renderAdmin(); }
         }
-
         function addNewCategory() {
             let n = document.getElementById('new_cat_name').value;
             let u = document.getElementById('new_cat_unit').value;
             if(n) { db[n] = { unit: u, items: {} }; save(); renderAdmin(); }
         }
-
         function save() { localStorage.setItem('qalyoubi_db', JSON.stringify(db)); }
 
         renderTabs();
