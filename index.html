@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مركز القليوبي | الفخامة في عالم الإسفنج 2026</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-bg: #030508;
+            --premium-gold: #c2a35d;
+            --soft-gold: #e5d2a7;
+            --glass-white: rgba(255, 255, 255, 0.05);
+            --border-line: rgba(194, 163, 93, 0.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
+
+        body {
+            background-color: var(--dark-bg);
+            color: #f1f1f1;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(194, 163, 93, 0.08) 0, transparent 40%),
+                radial-gradient(at 100% 100%, rgba(194, 163, 93, 0.08) 0, transparent 40%);
+        }
+
+        /* الطبقة المتحركة للخلفية */
+        .bg-glow {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+            opacity: 0.2; z-index: -1;
+        }
+
+        header { padding: 80px 20px 40px; text-align: center; }
+        header span { 
+            display: block; color: var(--premium-gold); font-size: 12px; 
+            letter-spacing: 6px; margin-bottom: 10px; font-weight: 300;
+        }
+        header h1 { 
+            font-size: clamp(35px, 8vw, 60px); font-weight: 900; color: #fff;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .title-underline {
+            width: 100px; height: 2px; background: linear-gradient(90deg, transparent, var(--premium-gold), transparent);
+            margin: 20px auto;
+        }
+
+        /* قسم الأرقام الذهبي */
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            max-width: 900px; margin: 0 auto 50px; gap: 20px; padding: 0 20px;
+        }
+        .stat-item {
+            background: var(--glass-white);
+            border: 1px solid var(--border-line);
+            padding: 20px; border-radius: 15px; text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        .stat-item h4 { font-size: 26px; color: var(--premium-gold); margin-bottom: 5px; font-weight: 900; }
+        .stat-item p { font-size: 12px; color: #aaa; font-weight: 600; }
+
+        /* حاوية الحاسبة */
+        .calculator-luxury {
+            max-width: 850px; margin: 0 auto 100px; padding: 0 20px;
+        }
+        .glass-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-line);
+            border-radius: 35px; padding: 50px;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        /* تبويبات عصرية */
+        .tabs-nav {
+            display: flex; gap: 10px; margin-bottom: 40px;
+            background: rgba(0,0,0,0.4); padding: 8px; border-radius: 20px;
+        }
+        .t-btn {
+            flex: 1; padding: 15px; border: none; background: transparent;
+            color: #888; font-weight: 700; cursor: pointer; border-radius: 15px;
+            transition: 0.4s; font-size: 15px;
+        }
+        .t-btn.active { background: var(--premium-gold); color: #000; }
+
+        /* الحقول */
+        .field-group { margin-bottom: 30px; }
+        .field-group label { 
+            display: block; margin-bottom: 12px; font-size: 13px; 
+            color: var(--soft-gold); font-weight: 600; opacity: 0.8;
+        }
+        select, input {
+            width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1);
+            padding: 18px 25px; border-radius: 15px; color: #fff; font-size: 16px;
+            transition: 0.3s;
+        }
+        select:focus, input:focus { border-color: var(--premium-gold); outline: none; }
+
+        .row-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
+
+        /* الزرار الرئيسي */
+        .main-action-btn {
+            width: 100%; padding: 22px; border-radius: 18px; border: none;
+            background: linear-gradient(135deg, #d4af37, #967a2a);
+            color: #000; font-size: 19px; font-weight: 900; cursor: pointer;
+            transition: 0.5s; margin-top: 15px;
+            box-shadow: 0 10px 30px rgba(194, 163, 93, 0.2);
+        }
+        .main-action-btn:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 15px 40px rgba(194, 163, 93, 0.4);
+            filter: brightness(1.2);
+        }
+
+        /* النتيجة والواتساب */
+        #final-panel {
+            display: none; margin-top: 50px; text-align: center;
+            border-top: 1px solid var(--border-line); padding-top: 40px;
+            animation: fadeIn 0.8s ease forwards;
+        }
+        @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+
+        .price-label { font-size: 12px; color: var(--premium-gold); letter-spacing: 2px; }
+        .big-price { font-size: 75px; font-weight: 900; margin: 10px 0; color: #fff; }
+
+        .wa-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 40px; }
+        .wa-card {
+            text-decoration: none; padding: 20px; border-radius: 18px;
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            font-weight: 700; color: #fff; transition: 0.3s;
+        }
+        .sh-color { background: #1a4d2e; border: 1px solid #2ecc71; }
+        .mz-color { background: #1a3a5f; border: 1px solid #3498db; }
+        .wa-card:hover { transform: scale(1.03); }
+
+        footer { padding: 60px 20px; text-align: center; opacity: 0.6; font-size: 13px; }
+
+        @media (max-width: 600px) {
+            .stats-grid { grid-template-columns: 1fr; }
+            .row-grid { grid-template-columns: 1fr; }
+            .wa-grid { grid-template-columns: 1fr; }
+            .big-price { font-size: 50px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-glow"></div>
+
+    <header>
+        <span>SINCE 2026</span>
+        <h1>مركز القليوبي</h1>
+        <div class="title-underline"></div>
+    </header>
+
+    <div class="stats-grid">
+        <div class="stat-item"><h4>أحدث</h4><p>قائمة أسعار مصر</p></div>
+        <div class="stat-item"><h4>+15</h4><p>خامة وكثافة أصلية</p></div>
+        <div class="stat-item"><h4>مضمون</h4><p>جودة وكيل معتمد</p></div>
+    </div>
+
+    <div class="calculator-luxury">
+        <div class="glass-box">
+            
+            <div class="tabs-nav">
+                <button class="t-btn active" onclick="setTab('إسفنج مراتب', this)">إسفنج المراتب</button>
+                <button class="t-btn" onclick="setTab('إسفنج ريبوند', this)">ريبوند طبي</button>
+                <button class="t-btn" onclick="setTab('فايبر رول', this)">فايبر حراري</button>
+            </div>
+
+            <div class="field-group">
+                <label>نوع المنتج والكثافة</label>
+                <select id="sel_prod"></select>
+            </div>
+
+            <div id="m3_box">
+                <div class="row-grid">
+                    <div class="field-group"><label>الطول (سم)</label><input type="number" id="dim_l" value="200"></div>
+                    <div class="field-group"><label>العرض (سم)</label><input type="number" id="dim_w" value="100"></div>
+                    <div class="field-group"><label>التخانة (سم)</label><input type="number" id="dim_t" value="10"></div>
+                </div>
+            </div>
+
+            <div id="mtr_box" style="display:none;">
+                <div class="field-group">
+                    <label>الكمية بالأمتار</label>
+                    <input type="number" id="dim_q" placeholder="مثلاً: 10 متر">
+                </div>
+            </div>
+
+            <button class="main-action-btn" onclick="calculateFinal()">
+                <i class="fas fa-check-circle" style="margin-left: 10px;"></i>
+                تأكيد المواصفات وعرض السعر
+            </button>
+
+            <div id="final-panel">
+                <span class="price-label">القيمة التقديرية الإجمالية</span>
+                <div class="big-price"><span id="total_val">0</span> <small style="font-size: 18px; color: var(--premium-gold);">ج.م</small></div>
+                
+                <p style="color: #777; font-size: 14px; margin-bottom: 25px;">تواصل الآن مع خبرائنا لتأكيد الطلب والتوافر</p>
+
+                <div class="wa-grid">
+                    <a id="wa_1" href="#" target="_blank" class="wa-card sh-color">
+                        <i class="fab fa-whatsapp"></i> الأستاذ شعبان
+                    </a>
+                    <a id="wa_2" href="#" target="_blank" class="wa-card mz-color">
+                        <i class="fab fa-whatsapp"></i> الأستاذ أبو مازن
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>مركز القليوبي - الخبير الأول في خامات التنجيد الفاخرة</p>
+        <p style="margin-top: 10px;">فرع التوزيع الرئيسي | 2026 ©</p>
+    </footer>
+
+    <script>
+        const pricing = {
+            "إسفنج مراتب": {
+                unit: "m3",
+                items: {
+                    "إسفنج كثافة 18": 11500, "إسفنج كثافة 22": 13200, "إسفنج كثافة 25": 14500,
+                    "إسفنج كثافة 28": 15800, "إسفنج كثافة 30": 17200, "إسفنج كثافة 33": 18500, "إسفنج كثافة 35": 19800
+                }
+            },
+            "إسفنج ريبوند": {
+                unit: "m3",
+                items: {
+                    "ريبوند طبي كثافة 40": 14900, "ريبوند طبي كثافة 50": 16200, "ريبوند طبي كثافة 60": 17500, 
+                    "ريبوند طبي كثافة 80": 18500, "ريبوند طبي كثافة 100": 20000, "ريبوند طبي كثافة 120": 23500
+                }
+            },
+            "فايبر رول": {
+                unit: "meter",
+                items: {
+                    "فايبر 100 جرام": 480, "فايبر 150 جرام": 510, "فايبر 200 جرام": 540, 
+                    "فايبر 250 جرام": 570, "فايبر 300 جرام": 600, "فايبر 350 جرام": 630, "فايبر 400 جرام": 670
+                }
+            }
+        };
+
+        let currentCategory = "إسفنج مراتب";
+
+        function setTab(cat, btn) {
+            document.querySelectorAll('.t-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentCategory = cat;
+            
+            const sel = document.getElementById('sel_prod');
+            sel.innerHTML = "";
+            for (let name in pricing[cat].items) {
+                let op = document.createElement('option');
+                op.value = pricing[cat].items[name];
+                op.innerText = name;
+                sel.appendChild(op);
+            }
+
+            document.getElementById('m3_box').style.display = pricing[cat].unit === 'm3' ? 'block' : 'none';
+            document.getElementById('mtr_box').style.display = pricing[cat].unit === 'meter' ? 'block' : 'none';
+        }
+
+        function calculateFinal() {
+            const sel = document.getElementById('sel_prod');
+            const rate = parseFloat(sel.value);
+            const itemName = sel.options[sel.selectedIndex].text;
+            
+            let total = 0;
+            let details = "";
+
+            if (pricing[currentCategory].unit === 'm3') {
+                const l = parseFloat(document.getElementById('dim_l').value) || 0;
+                const w = parseFloat(document.getElementById('dim_w').value) || 0;
+                const t = parseFloat(document.getElementById('dim_t').value) || 0;
+                total = (l * w * t / 1000000) * rate;
+                details = `المقاس المختار: ${l}x${w}x${t} سم`;
+            } else {
+                const q = parseFloat(document.getElementById('dim_q').value) || 0;
+                total = q * rate;
+                details = `الكمية المطلوبة: ${q} متر`;
+            }
+
+            if (total <= 0) { alert("يرجى التأكد من المقاسات"); return; }
+
+            const formattedPrice = Math.round(total).toLocaleString();
+            document.getElementById('total_val').innerText = formattedPrice;
+            document.getElementById('final-panel').style.display = 'block';
+
+            const waText = `مرحباً، أريد الاستفسار عن الطلب التالي:\n\n*المنتج:* ${itemName}\n*المواصفات:* ${details}\n*إجمالي القيمة:* ${formattedPrice} جنيه مصري\n\nشكراً لكم.`;
+            
+            document.getElementById('wa_1').href = `https://wa.me/201003316023?text=${encodeURIComponent(waText)}`;
+            document.getElementById('wa_2').href = `https://wa.me/201012381893?text=${encodeURIComponent(waText)}`;
+            
+            window.scrollBy({ top: 400, behavior: 'smooth' });
+        }
+
+        setTab('إسفنج مراتب', document.querySelector('.t-btn'));
+    </script>
+</body>
+</html>
