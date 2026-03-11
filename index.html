@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta name="8885eb4b4eca750077d93da13d5a1034b6a85e1c" content="8885eb4b4eca750077d93da13d5a1034b6a85e1c" />
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="referrer" content="no-referrer-when-downgrade" />
     <title>مركز القليوبي | نظام الإدارة المتكامل 2026</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -30,6 +27,7 @@
         .bg-glow { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: url('https://www.transparenttextures.com/patterns/asfalt-dark.png'); opacity: 0.2; z-index: -1; }
 
         header { padding: 60px 20px 30px; text-align: center; }
+        header span { color: var(--premium-gold); font-weight: 300; letter-spacing: 2px; }
         header h1 { font-size: clamp(30px, 7vw, 55px); font-weight: 900; color: #fff; text-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         
         .title-underline {
@@ -41,6 +39,7 @@
         .glass-box {
             background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-line);
             border-radius: 30px; padding: 40px; box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
         }
 
         .tabs-nav { display: flex; gap: 8px; margin-bottom: 30px; background: rgba(0,0,0,0.4); padding: 6px; border-radius: 15px; overflow-x: auto; scrollbar-width: none; }
@@ -49,7 +48,8 @@
 
         .field-group { margin-bottom: 25px; }
         .field-group label { display: block; margin-bottom: 10px; color: var(--soft-gold); font-size: 14px; }
-        select, input { width: 100%; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); padding: 15px 20px; border-radius: 12px; color: #fff; font-size: 16px; }
+        select, input { width: 100%; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); padding: 15px 20px; border-radius: 12px; color: #fff; font-size: 16px; outline: none; }
+        select:focus, input:focus { border-color: var(--premium-gold); }
         .row-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
 
         .main-action-btn {
@@ -57,21 +57,23 @@
             background: linear-gradient(135deg, #d4af37, #967a2a);
             color: #000; font-size: 18px; font-weight: 900; cursor: pointer; transition: 0.4s;
         }
+        .main-action-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(194,163,93,0.3); }
 
         #final-panel { display: none; margin-top: 40px; text-align: center; border-top: 1px solid var(--border-line); padding-top: 30px; }
         .big-price { font-size: 60px; font-weight: 900; color: #fff; margin: 10px 0; }
         
         .wa-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 30px; }
-        .wa-card { text-decoration: none; padding: 15px; border-radius: 12px; color: #fff; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 700; }
+        .wa-card { text-decoration: none; padding: 15px; border-radius: 12px; color: #fff; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 700; transition: 0.3s; }
+        .wa-card:hover { opacity: 0.8; }
         .sh-color { background: #1a4d2e; border: 1px solid #2ecc71; }
         .mz-color { background: #1a3a5f; border: 1px solid #3498db; }
 
         #admin-panel { display: none; max-width: 850px; margin: 20px auto; padding: 30px; background: #080808; border: 1px solid var(--premium-gold); border-radius: 25px; }
         .admin-section { background: #111; padding: 20px; border-radius: 15px; margin-bottom: 20px; border: 1px solid #222; }
         .admin-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 10px; border-bottom: 1px solid #222; }
-        .admin-item input { width: 100px; padding: 5px; }
-        .btn-add { background: #27ae60; color: #fff; padding: 8px 15px; border: none; border-radius: 8px; cursor: pointer; margin-top: 10px; font-weight: 600; }
-        .btn-del { background: #c0392b; color: #fff; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; }
+        .admin-item input { width: 120px; padding: 8px; margin-left: 5px; }
+        .btn-add { background: #27ae60; color: #fff; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; margin-top: 10px; font-weight: 600; }
+        .btn-del { background: #c0392b; color: #fff; border: none; padding: 5px 12px; border-radius: 5px; cursor: pointer; }
 
         footer { text-align: center; padding: 40px; opacity: 0.5; font-size: 12px; }
         @media (max-width: 600px) { .row-grid, .wa-grid { grid-template-columns: 1fr; } }
@@ -116,6 +118,7 @@
 
                 <div id="final-panel">
                     <div class="big-price"><span id="total_val">0</span> <small style="font-size: 18px; color: var(--premium-gold);">ج.م</small></div>
+                    <p style="color: #aaa; margin-bottom: 20px;">الأسعار تقريبية بناءً على المدخلات الحالية</p>
                     <div class="wa-grid">
                         <a id="wa_1" href="#" target="_blank" class="wa-card sh-color"><i class="fab fa-whatsapp"></i> أ/ شعبان</a>
                         <a id="wa_2" href="#" target="_blank" class="wa-card mz-color"><i class="fab fa-whatsapp"></i> أ/ أبو مازن</a>
@@ -129,8 +132,8 @@
         <h2 style="color:var(--premium-gold); margin-bottom:20px;">لوحة التحكم في الأصناف والأسعار</h2>
         
         <div class="admin-section">
-            <h4 style="margin-bottom:10px;">+ إضافة قسم جديد (مثل: أقمشة)</h4>
-            <input type="text" id="new_cat_name" placeholder="اسم القسم" style="margin-bottom:10px;">
+            <h4 style="margin-bottom:10px;">+ إضافة قسم جديد</h4>
+            <input type="text" id="new_cat_name" placeholder="اسم القسم (مثلاً: أقمشة ستائر)" style="margin-bottom:10px;">
             <select id="new_cat_unit" style="margin-bottom:10px;">
                 <option value="m3">حساب بالمتر المكعب (إسفنج)</option>
                 <option value="meter">حساب بالمتر الطولي (فايبر/قماش)</option>
@@ -146,6 +149,7 @@
     <footer>مركز القليوبي - جميع الحقوق محفوظة 2026</footer>
 
     <script>
+        // البيانات الافتراضية
         const defaultData = {
             "إسفنج مراتب": {
                 unit: "m3",
@@ -161,13 +165,15 @@
             }
         };
 
+        // تحميل البيانات من الذاكرة أو استخدام الافتراضية
         let db = JSON.parse(localStorage.getItem('qalyoubi_db')) || defaultData;
         let currentCat = Object.keys(db)[0];
 
+        // وظيفة سرية لفتح لوحة التحكم (عند الضغط مطولاً أو كليك يمين على الخط تحت العنوان)
         document.getElementById('secret_key').oncontextmenu = function(e) {
             e.preventDefault();
             let p = prompt("كلمة السر:");
-            if (btoa(p) === "MTM1Nzkw") {
+            if (btoa(p) === "MTM1Nzkw") { // الباسورد هو 135790
                 document.getElementById('admin-panel').style.display = 'block';
                 document.getElementById('main-app').style.display = 'none';
                 renderAdmin();
@@ -181,7 +187,11 @@
                 const btn = document.createElement('button');
                 btn.className = `t-btn ${cat === currentCat ? 'active' : ''}`;
                 btn.innerText = cat;
-                btn.onclick = () => { currentCat = cat; renderTabs(); updateProdList(); };
+                btn.onclick = () => { 
+                    currentCat = cat; 
+                    renderTabs(); 
+                    updateProdList(); 
+                };
                 container.appendChild(btn);
             });
             updateProdList();
@@ -190,9 +200,10 @@
         function updateProdList() {
             const sel = document.getElementById('sel_prod');
             sel.innerHTML = "";
-            for (let item in db[currentCat].items) {
+            const items = db[currentCat].items;
+            for (let item in items) {
                 let opt = document.createElement('option');
-                opt.value = db[currentCat].items[item];
+                opt.value = items[item];
                 opt.innerText = item;
                 sel.appendChild(opt);
             }
@@ -203,61 +214,109 @@
             const unit = db[currentCat].unit;
             document.getElementById('m3_box').style.display = unit === 'm3' ? 'block' : 'none';
             document.getElementById('mtr_box').style.display = unit === 'meter' ? 'block' : 'none';
+            document.getElementById('final-panel').style.display = 'none';
         }
 
         function calculate() {
-            const rate = parseFloat(document.getElementById('sel_prod').value);
+            const sel = document.getElementById('sel_prod');
+            const rate = parseFloat(sel.value) || 0;
             let total = 0;
+
             if (db[currentCat].unit === 'm3') {
-                const l = document.getElementById('dim_l').value, w = document.getElementById('dim_w').value, t = document.getElementById('dim_t').value;
+                const l = parseFloat(document.getElementById('dim_l').value) || 0;
+                const w = parseFloat(document.getElementById('dim_w').value) || 0;
+                const t = parseFloat(document.getElementById('dim_t').value) || 0;
+                // الحساب بالمتر المكعب
                 total = (l * w * t / 1000000) * rate;
             } else {
-                total = (document.getElementById('dim_q').value || 0) * rate;
+                const q = parseFloat(document.getElementById('dim_q').value) || 0;
+                total = q * rate;
             }
-            document.getElementById('total_val').innerText = Math.round(total).toLocaleString();
+
+            const finalPrice = Math.round(total);
+            document.getElementById('total_val').innerText = finalPrice.toLocaleString();
             document.getElementById('final-panel').style.display = 'block';
             
-            const msg = encodeURIComponent(`استفسار من الموقع:\nالقسم: ${currentCat}\nالصنف: ${document.getElementById('sel_prod').options[document.getElementById('sel_prod').selectedIndex].text}\nالقيمة: ${Math.round(total)} ج.م`);
+            const prodText = sel.options[sel.selectedIndex].text;
+            const msg = encodeURIComponent(`استفسار من الموقع:\nالقسم: ${currentCat}\nالصنف: ${prodText}\nالسعر الإجمالي: ${finalPrice} ج.م`);
+            
             document.getElementById('wa_1').href = `https://wa.me/201003316023?text=${msg}`;
             document.getElementById('wa_2').href = `https://wa.me/201012381893?text=${msg}`;
         }
 
+        // دالات لوحة التحكم
         function renderAdmin() {
             const editor = document.getElementById('admin-editor');
             editor.innerHTML = "";
             for (let cat in db) {
                 let sec = document.createElement('div');
                 sec.className = "admin-section";
-                sec.innerHTML = `<h3 style="color:var(--premium-gold)">قسم: ${cat} <button class="btn-del" onclick="deleteCat('${cat}')">حذف القسم</button></h3>`;
+                sec.innerHTML = `<h3>${cat} <button class="btn-del" onclick="deleteCat('${cat}')">حذف القسم</button></h3><br>`;
+                
                 for (let item in db[cat].items) {
                     let div = document.createElement('div');
                     div.className = "admin-item";
-                    div.innerHTML = `<span>${item}</span> <div><input type="number" value="${db[cat].items[item]}" onchange="updatePrice('${cat}','${item}',this.value)"> <button class="btn-del" onclick="deleteItem('${cat}','${item}')">x</button></div>`;
+                    div.innerHTML = `
+                        <span>${item}</span> 
+                        <div>
+                            <input type="number" value="${db[cat].items[item]}" onchange="updatePrice('${cat}','${item}',this.value)"> 
+                            <button class="btn-del" onclick="deleteItem('${cat}','${item}')">x</button>
+                        </div>`;
                     sec.appendChild(div);
                 }
+                
                 let addBox = document.createElement('div');
-                addBox.innerHTML = `<input type="text" id="new_item_${cat}" placeholder="اسم صنف جديد" style="width:150px;"> <input type="number" id="new_price_${cat}" placeholder="السعر" style="width:80px;"> <button class="btn-add" onclick="addItem('${cat}')">إضافة صنف</button>`;
+                addBox.style.marginTop = "15px";
+                addBox.innerHTML = `
+                    <input type="text" id="new_item_${cat}" placeholder="اسم الصنف" style="width:140px;"> 
+                    <input type="number" id="new_price_${cat}" placeholder="السعر" style="width:80px;"> 
+                    <button class="btn-add" onclick="addItem('${cat}')">إضافة</button>`;
                 sec.appendChild(addBox);
                 editor.appendChild(sec);
             }
         }
 
         function updatePrice(c, i, v) { db[c].items[i] = parseFloat(v); save(); }
-        function deleteItem(c, i) { delete db[c].items[i]; save(); renderAdmin(); }
-        function deleteCat(c) { if(confirm('حذف القسم بالكامل؟')) { delete db[c]; save(); renderAdmin(); } }
+        
+        function deleteItem(c, i) { 
+            if(confirm('حذف هذا الصنف؟')) {
+                delete db[c].items[i]; save(); renderAdmin(); 
+            }
+        }
+        
+        function deleteCat(c) { 
+            if(confirm('هل أنت متأكد من حذف القسم بالكامل؟')) { 
+                delete db[c]; save(); renderAdmin(); 
+            } 
+        }
+        
         function addItem(c) {
             let n = document.getElementById(`new_item_${c}`).value;
             let p = document.getElementById(`new_price_${c}`).value;
-            if(n && p) { db[c].items[n] = parseFloat(p); save(); renderAdmin(); }
+            if(n && p) { 
+                db[c].items[n] = parseFloat(p); 
+                save(); 
+                renderAdmin(); 
+            } else {
+                alert("يرجى إدخال الاسم والسعر");
+            }
         }
+
         function addNewCategory() {
             let n = document.getElementById('new_cat_name').value;
             let u = document.getElementById('new_cat_unit').value;
-            if(n) { db[n] = { unit: u, items: {} }; save(); renderAdmin(); }
+            if(n) { 
+                db[n] = { unit: u, items: {} }; 
+                save(); 
+                renderAdmin();
+                document.getElementById('new_cat_name').value = "";
+            }
         }
+
         function save() { localStorage.setItem('qalyoubi_db', JSON.stringify(db)); }
 
-        renderTabs(
+        // تشغيل التطبيق
+        renderTabs();
     </script>
 </body>
 </html>
