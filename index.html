@@ -3,9 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مركز القليوبي | نظام الإدارة المتكامل 2026</title>
+    <title>مركز القليوبي | النظام السحابي المتكامل 2026</title>
+    
+    <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-database-compat.js"></script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --dark-bg: #030508;
@@ -47,8 +52,8 @@
         .t-btn.active { background: var(--premium-gold); color: #000; }
 
         .field-group { margin-bottom: 25px; }
-        .field-group label { display: block; margin-bottom: 10px; color: var(--soft-gold); font-size: 14px; }
-        select, input { width: 100%; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); padding: 15px 20px; border-radius: 12px; color: #fff; font-size: 16px; outline: none; }
+        .field-group label { display: block; margin-bottom: 10px; color: var(--soft-gold); font-size: 14px; text-align: right; }
+        select, input { width: 100%; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); padding: 15px 20px; border-radius: 12px; color: #fff; font-size: 16px; outline: none; text-align: right; }
         select:focus, input:focus { border-color: var(--premium-gold); }
         .row-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
 
@@ -68,12 +73,16 @@
         .sh-color { background: #1a4d2e; border: 1px solid #2ecc71; }
         .mz-color { background: #1a3a5f; border: 1px solid #3498db; }
 
-        #admin-panel { display: none; max-width: 850px; margin: 20px auto; padding: 30px; background: #080808; border: 1px solid var(--premium-gold); border-radius: 25px; }
+        /* لوحة الإدارة */
+        #admin-panel { display: none; max-width: 850px; margin: 20px auto; padding: 30px; background: #080808; border: 1px solid var(--premium-gold); border-radius: 25px; text-align: right; }
         .admin-section { background: #111; padding: 20px; border-radius: 15px; margin-bottom: 20px; border: 1px solid #222; }
         .admin-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 10px; border-bottom: 1px solid #222; }
-        .admin-item input { width: 120px; padding: 8px; margin-left: 5px; }
-        .btn-add { background: #27ae60; color: #fff; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; margin-top: 10px; font-weight: 600; }
+        .admin-item input { width: 100px; padding: 8px; margin-left: 5px; text-align: center; }
+        .btn-add { background: #27ae60; color: #fff; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; margin-top: 10px; font-weight: 600; width: 100%; }
         .btn-del { background: #c0392b; color: #fff; border: none; padding: 5px 12px; border-radius: 5px; cursor: pointer; }
+
+        .loader { border: 4px solid #111; border-top: 4px solid var(--premium-gold); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 100px auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         footer { text-align: center; padding: 40px; opacity: 0.5; font-size: 12px; }
         @media (max-width: 600px) { .row-grid, .wa-grid { grid-template-columns: 1fr; } }
@@ -89,7 +98,9 @@
         <div class="title-underline" id="secret_key"></div>
     </header>
 
-    <div id="main-app">
+    <div id="loading-spinner" class="loader"></div>
+
+    <div id="main-app" style="display:none;">
         <div class="calculator-luxury">
             <div class="glass-box">
                 <div class="tabs-nav" id="tabs-container"></div>
@@ -129,16 +140,16 @@
     </div>
 
     <div id="admin-panel">
-        <h2 style="color:var(--premium-gold); margin-bottom:20px;">لوحة التحكم في الأصناف والأسعار</h2>
+        <h2 style="color:var(--premium-gold); margin-bottom:20px; text-align: center;">لوحة إدارة السيرفر</h2>
         
         <div class="admin-section">
             <h4 style="margin-bottom:10px;">+ إضافة قسم جديد</h4>
-            <input type="text" id="new_cat_name" placeholder="اسم القسم (مثلاً: أقمشة ستائر)" style="margin-bottom:10px;">
+            <input type="text" id="new_cat_name" placeholder="اسم القسم الجديد" style="margin-bottom:10px;">
             <select id="new_cat_unit" style="margin-bottom:10px;">
                 <option value="m3">حساب بالمتر المكعب (إسفنج)</option>
                 <option value="meter">حساب بالمتر الطولي (فايبر/قماش)</option>
             </select>
-            <button class="btn-add" onclick="addNewCategory()">إضافة القسم</button>
+            <button class="btn-add" onclick="addNewCategory()">إضافة القسم للسيرفر</button>
         </div>
 
         <div id="admin-editor"></div>
@@ -149,31 +160,41 @@
     <footer>مركز القليوبي - جميع الحقوق محفوظة 2026</footer>
 
     <script>
-        // البيانات الافتراضية
-        const defaultData = {
-            "إسفنج مراتب": {
-                unit: "m3",
-                items: { "إسفنج كثافة 18": 11500, "إسفنج كثافة 22": 13200, "إسفنج كثافة 25": 14500, "إسفنج كثافة 28": 15800, "إسفنج كثافة 30": 17200, "إسفنج كثافة 33": 18500, "إسفنج كثافة 35": 19800 }
-            },
-            "إسفنج ريبوند": {
-                unit: "m3",
-                items: { "ريبوند 40": 14900, "ريبوند 60": 17500, "ريبوند 80": 18500, "ريبوند 100": 20000, "ريبوند 120": 23500 }
-            },
-            "فايبر رول": {
-                unit: "meter",
-                items: { "فايبر 100ج": 480, "فايبر 200ج": 540, "فايبر 300ج": 600, "فايبر 400ج": 670 }
-            }
+        // --- إعدادات Firebase الخاصة بمشروعك ---
+        const firebaseConfig = {
+          apiKey: "AIzaSyB3M980vSp8j1aXjZdWzZlgzTHL3aNYKDs",
+          authDomain: "qalyoubi-app-73d64.firebaseapp.com",
+          projectId: "qalyoubi-app-73d64",
+          storageBucket: "qalyoubi-app-73d64.firebasestorage.app",
+          messagingSenderId: "84855839461",
+          appId: "1:84855839461:web:9f9caae7ab99006463520c",
+          databaseURL: "https://qalyoubi-app-73d64-default-rtdb.firebaseio.com" 
         };
 
-        // تحميل البيانات من الذاكرة أو استخدام الافتراضية
-        let db = JSON.parse(localStorage.getItem('qalyoubi_db')) || defaultData;
-        let currentCat = Object.keys(db)[0];
+        firebase.initializeApp(firebaseConfig);
+        const dbRef = firebase.database().ref('qalyoubi_db');
 
-        // وظيفة سرية لفتح لوحة التحكم (عند الضغط مطولاً أو كليك يمين على الخط تحت العنوان)
+        let db = {};
+        let currentCat = "";
+
+        // جلب البيانات من السيرفر لحظياً
+        dbRef.on('value', (snapshot) => {
+            db = snapshot.val() || {};
+            document.getElementById('loading-spinner').style.display = 'none';
+            document.getElementById('main-app').style.display = 'block';
+            
+            if (!currentCat && Object.keys(db).length > 0) {
+                currentCat = Object.keys(db)[0];
+            }
+            renderTabs();
+            if(document.getElementById('admin-panel').style.display === 'block') renderAdmin();
+        });
+
+        // زر السير (اضغط كليك يمين أو لمسة طويلة على الخط تحت العنوان)
         document.getElementById('secret_key').oncontextmenu = function(e) {
             e.preventDefault();
-            let p = prompt("كلمة السر:");
-            if (btoa(p) === "MTM1Nzkw") { // الباسورد هو 135790
+            let p = prompt("كلمة سر الإدارة:");
+            if (p === "135790") {
                 document.getElementById('admin-panel').style.display = 'block';
                 document.getElementById('main-app').style.display = 'none';
                 renderAdmin();
@@ -187,11 +208,7 @@
                 const btn = document.createElement('button');
                 btn.className = `t-btn ${cat === currentCat ? 'active' : ''}`;
                 btn.innerText = cat;
-                btn.onclick = () => { 
-                    currentCat = cat; 
-                    renderTabs(); 
-                    updateProdList(); 
-                };
+                btn.onclick = () => { currentCat = cat; renderTabs(); };
                 container.appendChild(btn);
             });
             updateProdList();
@@ -200,7 +217,8 @@
         function updateProdList() {
             const sel = document.getElementById('sel_prod');
             sel.innerHTML = "";
-            const items = db[currentCat].items;
+            if(!currentCat || !db[currentCat]) return;
+            const items = db[currentCat].items || {};
             for (let item in items) {
                 let opt = document.createElement('option');
                 opt.value = items[item];
@@ -211,6 +229,7 @@
         }
 
         function updateUI() {
+            if(!currentCat || !db[currentCat]) return;
             const unit = db[currentCat].unit;
             document.getElementById('m3_box').style.display = unit === 'm3' ? 'block' : 'none';
             document.getElementById('mtr_box').style.display = unit === 'meter' ? 'block' : 'none';
@@ -226,7 +245,6 @@
                 const l = parseFloat(document.getElementById('dim_l').value) || 0;
                 const w = parseFloat(document.getElementById('dim_w').value) || 0;
                 const t = parseFloat(document.getElementById('dim_t').value) || 0;
-                // الحساب بالمتر المكعب
                 total = (l * w * t / 1000000) * rate;
             } else {
                 const q = parseFloat(document.getElementById('dim_q').value) || 0;
@@ -244,7 +262,7 @@
             document.getElementById('wa_2').href = `https://wa.me/201012381893?text=${msg}`;
         }
 
-        // دالات لوحة التحكم
+        // --- وظائف لوحة التحكم ---
         function renderAdmin() {
             const editor = document.getElementById('admin-editor');
             editor.innerHTML = "";
@@ -268,37 +286,25 @@
                 let addBox = document.createElement('div');
                 addBox.style.marginTop = "15px";
                 addBox.innerHTML = `
-                    <input type="text" id="new_item_${cat}" placeholder="اسم الصنف" style="width:140px;"> 
-                    <input type="number" id="new_price_${cat}" placeholder="السعر" style="width:80px;"> 
-                    <button class="btn-add" onclick="addItem('${cat}')">إضافة</button>`;
+                    <input type="text" id="new_item_${cat}" placeholder="اسم الصنف الجديد" style="width:60%; margin-bottom:5px;"> 
+                    <input type="number" id="new_price_${cat}" placeholder="السعر" style="width:35%; margin-bottom:5px;"> 
+                    <button class="btn-add" onclick="addItem('${cat}')">إضافة صنف للقسم</button>`;
                 sec.appendChild(addBox);
                 editor.appendChild(sec);
             }
         }
 
-        function updatePrice(c, i, v) { db[c].items[i] = parseFloat(v); save(); }
-        
-        function deleteItem(c, i) { 
-            if(confirm('حذف هذا الصنف؟')) {
-                delete db[c].items[i]; save(); renderAdmin(); 
-            }
-        }
-        
-        function deleteCat(c) { 
-            if(confirm('هل أنت متأكد من حذف القسم بالكامل؟')) { 
-                delete db[c]; save(); renderAdmin(); 
-            } 
-        }
+        function updatePrice(c, i, v) { db[c].items[i] = parseFloat(v); dbRef.set(db); }
+        function deleteItem(c, i) { if(confirm('حذف؟')) { delete db[c].items[i]; dbRef.set(db); } }
+        function deleteCat(c) { if(confirm('حذف القسم؟')) { delete db[c]; dbRef.set(db); } }
         
         function addItem(c) {
             let n = document.getElementById(`new_item_${c}`).value;
             let p = document.getElementById(`new_price_${c}`).value;
             if(n && p) { 
+                if(!db[c].items) db[c].items = {};
                 db[c].items[n] = parseFloat(p); 
-                save(); 
-                renderAdmin(); 
-            } else {
-                alert("يرجى إدخال الاسم والسعر");
+                dbRef.set(db); 
             }
         }
 
@@ -306,17 +312,11 @@
             let n = document.getElementById('new_cat_name').value;
             let u = document.getElementById('new_cat_unit').value;
             if(n) { 
-                db[n] = { unit: u, items: {} }; 
-                save(); 
-                renderAdmin();
+                db[n] = { unit: u, items: {"صنف جديد": 0} }; 
+                dbRef.set(db);
                 document.getElementById('new_cat_name').value = "";
             }
         }
-
-        function save() { localStorage.setItem('qalyoubi_db', JSON.stringify(db)); }
-
-        // تشغيل التطبيق
-        renderTabs();
     </script>
 </body>
 </html>
