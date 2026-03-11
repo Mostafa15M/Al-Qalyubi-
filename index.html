@@ -5,6 +5,7 @@
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer-when-downgrade" />
     <title>مركز القليوبي | نظام الإدارة المتكامل 2026</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
@@ -65,13 +66,6 @@
         .sh-color { background: #1a4d2e; border: 1px solid #2ecc71; }
         .mz-color { background: #1a3a5f; border: 1px solid #3498db; }
 
-        #ads-section {
-            max-width: 850px; margin: 0 auto 30px; padding: 15px;
-            background: rgba(255,255,255,0.02); border: 1px dashed var(--border-line);
-            border-radius: 15px; text-align: center;
-        }
-        .ads-hint { font-size: 10px; color: var(--premium-gold); opacity: 0.4; letter-spacing: 2px; }
-
         #admin-panel { display: none; max-width: 850px; margin: 20px auto; padding: 30px; background: #080808; border: 1px solid var(--premium-gold); border-radius: 25px; }
         .admin-section { background: #111; padding: 20px; border-radius: 15px; margin-bottom: 20px; border: 1px solid #222; }
         .admin-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 10px; border-bottom: 1px solid #222; }
@@ -129,24 +123,20 @@
                 </div>
             </div>
         </div>
+        
+        <script>
+        (function(zmt){
+        var d = document,
+            s = d.createElement('script'),
+            l = d.scripts[d.scripts.length - 1];
+        s.settings = zmt || {};
+        s.src = "\/\/crooked-dream.com\/bmXHV.sxdjGdlX0pY\/WAcB\/Fenme9-utZnUVlXkKPSTFYz4GNpTlc\/5ZMqjWUztpNdjqgW1WNOz\/kAyIOrQr";
+        s.async = true;
+        s.referrerPolicy = 'no-referrer-when-downgrade';
+        l.parentNode.insertBefore(s, l);
+        })({})
+        </script>
 
-        <div id="ads-section">
-            <span class="ads-hint">إعلانات</span>
-            <div id="google-ads-container">
-                <script>
-                (function(zmt){
-                var d = document,
-                    s = d.createElement('script'),
-                    l = d.scripts[d.scripts.length - 1];
-                s.settings = zmt || {};
-                s.src = "\/\/crooked-dream.com\/bmXHV.sxdjGdlX0pY\/WAcB\/Fenme9-utZnUVlXkKPSTFYz4GNpTlc\/5ZMqjWUztpNdjqgW1WNOz\/kAyIOrQr";
-                s.async = true;
-                s.referrerPolicy = 'no-referrer-when-downgrade';
-                l.parentNode.insertBefore(s, l);
-                })({})
-                </script>
-            </div>
-        </div>
     </div>
 
     <div id="admin-panel">
@@ -236,7 +226,7 @@
                 const l = document.getElementById('dim_l').value, w = document.getElementById('dim_w').value, t = document.getElementById('dim_t').value;
                 total = (l * w * t / 1000000) * rate;
             } else {
-                total = document.getElementById('dim_q').value * rate;
+                total = (document.getElementById('dim_q').value || 0) * rate;
             }
             document.getElementById('total_val').innerText = Math.round(total).toLocaleString();
             document.getElementById('final-panel').style.display = 'block';
