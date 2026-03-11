@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مركز القليوبي | الفخامة في عالم الإسفنج 2026</title>
+    <title>مركز القليوبي | نظام الإدارة المتكامل 2026</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <style>
@@ -21,128 +21,59 @@
             background-color: var(--dark-bg);
             color: #f1f1f1;
             overflow-x: hidden;
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(194, 163, 93, 0.08) 0, transparent 40%),
-                radial-gradient(at 100% 100%, rgba(194, 163, 93, 0.08) 0, transparent 40%);
+            background-image: radial-gradient(at 0% 0%, rgba(194, 163, 93, 0.08) 0, transparent 40%), radial-gradient(at 100% 100%, rgba(194, 163, 93, 0.08) 0, transparent 40%);
         }
 
-        /* الطبقة المتحركة للخلفية */
-        .bg-glow {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
-            opacity: 0.2; z-index: -1;
-        }
+        .bg-glow { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: url('https://www.transparenttextures.com/patterns/asfalt-dark.png'); opacity: 0.2; z-index: -1; }
 
-        header { padding: 80px 20px 40px; text-align: center; }
-        header span { 
-            display: block; color: var(--premium-gold); font-size: 12px; 
-            letter-spacing: 6px; margin-bottom: 10px; font-weight: 300;
-        }
-        header h1 { 
-            font-size: clamp(35px, 8vw, 60px); font-weight: 900; color: #fff;
-            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
+        header { padding: 60px 20px 30px; text-align: center; }
+        header h1 { font-size: clamp(30px, 7vw, 55px); font-weight: 900; color: #fff; text-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        
+        /* المفتاح السري */
         .title-underline {
-            width: 100px; height: 2px; background: linear-gradient(90deg, transparent, var(--premium-gold), transparent);
-            margin: 20px auto;
+            width: 100px; height: 3px; background: linear-gradient(90deg, transparent, var(--premium-gold), transparent);
+            margin: 15px auto; cursor: pointer; transition: 0.3s;
         }
 
-        /* قسم الأرقام الذهبي */
-        .stats-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr);
-            max-width: 900px; margin: 0 auto 50px; gap: 20px; padding: 0 20px;
-        }
-        .stat-item {
-            background: var(--glass-white);
-            border: 1px solid var(--border-line);
-            padding: 20px; border-radius: 15px; text-align: center;
-            backdrop-filter: blur(10px);
-        }
-        .stat-item h4 { font-size: 26px; color: var(--premium-gold); margin-bottom: 5px; font-weight: 900; }
-        .stat-item p { font-size: 12px; color: #aaa; font-weight: 600; }
-
-        /* حاوية الحاسبة */
-        .calculator-luxury {
-            max-width: 850px; margin: 0 auto 100px; padding: 0 20px;
-        }
+        .calculator-luxury { max-width: 850px; margin: 0 auto 50px; padding: 0 20px; }
         .glass-box {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid var(--border-line);
-            border-radius: 35px; padding: 50px;
-            box-shadow: 0 50px 100px rgba(0,0,0,0.5);
-            position: relative;
+            background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-line);
+            border-radius: 30px; padding: 40px; box-shadow: 0 40px 80px rgba(0,0,0,0.6);
         }
 
-        /* تبويبات عصرية */
-        .tabs-nav {
-            display: flex; gap: 10px; margin-bottom: 40px;
-            background: rgba(0,0,0,0.4); padding: 8px; border-radius: 20px;
-        }
-        .t-btn {
-            flex: 1; padding: 15px; border: none; background: transparent;
-            color: #888; font-weight: 700; cursor: pointer; border-radius: 15px;
-            transition: 0.4s; font-size: 15px;
-        }
+        .tabs-nav { display: flex; gap: 8px; margin-bottom: 30px; background: rgba(0,0,0,0.4); padding: 6px; border-radius: 15px; overflow-x: auto; scrollbar-width: none; }
+        .t-btn { flex: 1; padding: 12px; border: none; background: transparent; color: #777; font-weight: 700; cursor: pointer; border-radius: 10px; transition: 0.3s; white-space: nowrap; }
         .t-btn.active { background: var(--premium-gold); color: #000; }
 
-        /* الحقول */
-        .field-group { margin-bottom: 30px; }
-        .field-group label { 
-            display: block; margin-bottom: 12px; font-size: 13px; 
-            color: var(--soft-gold); font-weight: 600; opacity: 0.8;
-        }
-        select, input {
-            width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1);
-            padding: 18px 25px; border-radius: 15px; color: #fff; font-size: 16px;
-            transition: 0.3s;
-        }
-        select:focus, input:focus { border-color: var(--premium-gold); outline: none; }
+        .field-group { margin-bottom: 25px; }
+        .field-group label { display: block; margin-bottom: 10px; color: var(--soft-gold); font-size: 14px; }
+        select, input { width: 100%; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.1); padding: 15px 20px; border-radius: 12px; color: #fff; font-size: 16px; }
+        .row-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
 
-        .row-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
-
-        /* الزرار الرئيسي */
         .main-action-btn {
-            width: 100%; padding: 22px; border-radius: 18px; border: none;
+            width: 100%; padding: 20px; border-radius: 15px; border: none;
             background: linear-gradient(135deg, #d4af37, #967a2a);
-            color: #000; font-size: 19px; font-weight: 900; cursor: pointer;
-            transition: 0.5s; margin-top: 15px;
-            box-shadow: 0 10px 30px rgba(194, 163, 93, 0.2);
-        }
-        .main-action-btn:hover { 
-            transform: translateY(-5px); 
-            box-shadow: 0 15px 40px rgba(194, 163, 93, 0.4);
-            filter: brightness(1.2);
+            color: #000; font-size: 18px; font-weight: 900; cursor: pointer; transition: 0.4s;
         }
 
-        /* النتيجة والواتساب */
-        #final-panel {
-            display: none; margin-top: 50px; text-align: center;
-            border-top: 1px solid var(--border-line); padding-top: 40px;
-            animation: fadeIn 0.8s ease forwards;
-        }
-        @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
-
-        .price-label { font-size: 12px; color: var(--premium-gold); letter-spacing: 2px; }
-        .big-price { font-size: 75px; font-weight: 900; margin: 10px 0; color: #fff; }
-
-        .wa-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 40px; }
-        .wa-card {
-            text-decoration: none; padding: 20px; border-radius: 18px;
-            display: flex; align-items: center; justify-content: center; gap: 12px;
-            font-weight: 700; color: #fff; transition: 0.3s;
-        }
+        #final-panel { display: none; margin-top: 40px; text-align: center; border-top: 1px solid var(--border-line); padding-top: 30px; }
+        .big-price { font-size: 60px; font-weight: 900; color: #fff; margin: 10px 0; }
+        
+        .wa-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 30px; }
+        .wa-card { text-decoration: none; padding: 15px; border-radius: 12px; color: #fff; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 700; }
         .sh-color { background: #1a4d2e; border: 1px solid #2ecc71; }
         .mz-color { background: #1a3a5f; border: 1px solid #3498db; }
-        .wa-card:hover { transform: scale(1.03); }
 
-        footer { padding: 60px 20px; text-align: center; opacity: 0.6; font-size: 13px; }
+        /* لوحة الإدارة المتقدمة */
+        #admin-panel { display: none; max-width: 850px; margin: 20px auto; padding: 30px; background: #080808; border: 1px solid var(--premium-gold); border-radius: 25px; }
+        .admin-section { background: #111; padding: 20px; border-radius: 15px; margin-bottom: 20px; border: 1px solid #222; }
+        .admin-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 10px; border-bottom: 1px solid #222; }
+        .admin-item input { width: 100px; padding: 5px; }
+        .btn-add { background: #27ae60; color: #fff; padding: 8px 15px; border: none; border-radius: 8px; cursor: pointer; margin-top: 10px; font-weight: 600; }
+        .btn-del { background: #c0392b; color: #fff; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; }
 
-        @media (max-width: 600px) {
-            .stats-grid { grid-template-columns: 1fr; }
-            .row-grid { grid-template-columns: 1fr; }
-            .wa-grid { grid-template-columns: 1fr; }
-            .big-price { font-size: 50px; }
-        }
+        footer { text-align: center; padding: 40px; opacity: 0.5; font-size: 12px; }
+        @media (max-width: 600px) { .row-grid, .wa-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -150,154 +81,190 @@
     <div class="bg-glow"></div>
 
     <header>
-        <span>SINCE 2026</span>
-        <h1>مركز القليوبي</h1>
-        <div class="title-underline"></div>
+        <span>مركز القليوبي 2026</span>
+        <h1>القليوبي للإسفنج</h1>
+        <div class="title-underline" id="secret_key"></div>
     </header>
 
-    <div class="stats-grid">
-        <div class="stat-item"><h4>أحدث</h4><p>قائمة أسعار مصر</p></div>
-        <div class="stat-item"><h4>+15</h4><p>خامة وكثافة أصلية</p></div>
-        <div class="stat-item"><h4>مضمون</h4><p>جودة وكيل معتمد</p></div>
-    </div>
+    <div id="main-app">
+        <div class="calculator-luxury">
+            <div class="glass-box">
+                <div class="tabs-nav" id="tabs-container"></div>
 
-    <div class="calculator-luxury">
-        <div class="glass-box">
-            
-            <div class="tabs-nav">
-                <button class="t-btn active" onclick="setTab('إسفنج مراتب', this)">إسفنج المراتب</button>
-                <button class="t-btn" onclick="setTab('إسفنج ريبوند', this)">ريبوند طبي</button>
-                <button class="t-btn" onclick="setTab('فايبر رول', this)">فايبر حراري</button>
-            </div>
-
-            <div class="field-group">
-                <label>نوع المنتج والكثافة</label>
-                <select id="sel_prod"></select>
-            </div>
-
-            <div id="m3_box">
-                <div class="row-grid">
-                    <div class="field-group"><label>الطول (سم)</label><input type="number" id="dim_l" value="200"></div>
-                    <div class="field-group"><label>العرض (سم)</label><input type="number" id="dim_w" value="100"></div>
-                    <div class="field-group"><label>التخانة (سم)</label><input type="number" id="dim_t" value="10"></div>
-                </div>
-            </div>
-
-            <div id="mtr_box" style="display:none;">
                 <div class="field-group">
-                    <label>الكمية بالأمتار</label>
-                    <input type="number" id="dim_q" placeholder="مثلاً: 10 متر">
+                    <label>اختر النوع والكثافة</label>
+                    <select id="sel_prod" onchange="updateUI()"></select>
                 </div>
-            </div>
 
-            <button class="main-action-btn" onclick="calculateFinal()">
-                <i class="fas fa-check-circle" style="margin-left: 10px;"></i>
-                تأكيد المواصفات وعرض السعر
-            </button>
+                <div id="m3_box">
+                    <div class="row-grid">
+                        <div class="field-group"><label>الطول (سم)</label><input type="number" id="dim_l" value="200"></div>
+                        <div class="field-group"><label>العرض (سم)</label><input type="number" id="dim_w" value="100"></div>
+                        <div class="field-group"><label>التخانة (سم)</label><input type="number" id="dim_t" value="10"></div>
+                    </div>
+                </div>
 
-            <div id="final-panel">
-                <span class="price-label">القيمة التقديرية الإجمالية</span>
-                <div class="big-price"><span id="total_val">0</span> <small style="font-size: 18px; color: var(--premium-gold);">ج.م</small></div>
-                
-                <p style="color: #777; font-size: 14px; margin-bottom: 25px;">تواصل الآن مع خبرائنا لتأكيد الطلب والتوافر</p>
+                <div id="mtr_box" style="display:none;">
+                    <div class="field-group">
+                        <label>الكمية المطلوبة (بالمتر)</label>
+                        <input type="number" id="dim_q" placeholder="مثال: 5">
+                    </div>
+                </div>
 
-                <div class="wa-grid">
-                    <a id="wa_1" href="#" target="_blank" class="wa-card sh-color">
-                        <i class="fab fa-whatsapp"></i> الأستاذ شعبان
-                    </a>
-                    <a id="wa_2" href="#" target="_blank" class="wa-card mz-color">
-                        <i class="fab fa-whatsapp"></i> الأستاذ أبو مازن
-                    </a>
+                <button class="main-action-btn" onclick="calculate()">حساب السعر النهائي</button>
+
+                <div id="final-panel">
+                    <div class="big-price"><span id="total_val">0</span> <small style="font-size: 18px; color: var(--premium-gold);">ج.م</small></div>
+                    <div class="wa-grid">
+                        <a id="wa_1" href="#" target="_blank" class="wa-card sh-color"><i class="fab fa-whatsapp"></i> أ/ شعبان</a>
+                        <a id="wa_2" href="#" target="_blank" class="wa-card mz-color"><i class="fab fa-whatsapp"></i> أ/ أبو مازن</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <footer>
-        <p>مركز القليوبي - الخبير الأول في خامات التنجيد الفاخرة</p>
-        <p style="margin-top: 10px;">فرع التوزيع الرئيسي | 2026 ©</p>
-    </footer>
+    <div id="admin-panel">
+        <h2 style="color:var(--premium-gold); margin-bottom:20px;">لوحة التحكم في الأصناف والأسعار</h2>
+        
+        <div class="admin-section">
+            <h4 style="margin-bottom:10px;">+ إضافة قسم جديد (مثل: أقمشة)</h4>
+            <input type="text" id="new_cat_name" placeholder="اسم القسم" style="margin-bottom:10px;">
+            <select id="new_cat_unit" style="margin-bottom:10px;">
+                <option value="m3">حساب بالمتر المكعب (إسفنج)</option>
+                <option value="meter">حساب بالمتر الطولي (فايبر/قماش)</option>
+            </select>
+            <button class="btn-add" onclick="addNewCategory()">إضافة القسم</button>
+        </div>
+
+        <div id="admin-editor"></div>
+
+        <button class="main-action-btn" onclick="location.reload()" style="background: #27ae60; color:#fff;">حفظ وخروج</button>
+    </div>
+
+    <footer>مركز القليوبي - شبين القناطر - جميع الحقوق محفوظة 2026</footer>
 
     <script>
-        const pricing = {
+        // البيانات الأساسية (كل الأصناف التي طلبتها)
+        const defaultData = {
             "إسفنج مراتب": {
                 unit: "m3",
-                items: {
-                    "إسفنج كثافة 18": 11500, "إسفنج كثافة 22": 13200, "إسفنج كثافة 25": 14500,
-                    "إسفنج كثافة 28": 15800, "إسفنج كثافة 30": 17200, "إسفنج كثافة 33": 18500, "إسفنج كثافة 35": 19800
-                }
+                items: { "إسفنج كثافة 18": 11500, "إسفنج كثافة 22": 13200, "إسفنج كثافة 25": 14500, "إسفنج كثافة 28": 15800, "إسفنج كثافة 30": 17200, "إسفنج كثافة 33": 18500, "إسفنج كثافة 35": 19800 }
             },
             "إسفنج ريبوند": {
                 unit: "m3",
-                items: {
-                    "ريبوند طبي كثافة 40": 14900, "ريبوند طبي كثافة 50": 16200, "ريبوند طبي كثافة 60": 17500, 
-                    "ريبوند طبي كثافة 80": 18500, "ريبوند طبي كثافة 100": 20000, "ريبوند طبي كثافة 120": 23500
-                }
+                items: { "ريبوند 40": 14900, "ريبوند 60": 17500, "ريبوند 80": 18500, "ريبوند 100": 20000, "ريبوند 120": 23500 }
             },
             "فايبر رول": {
                 unit: "meter",
-                items: {
-                    "فايبر 100 جرام": 480, "فايبر 150 جرام": 510, "فايبر 200 جرام": 540, 
-                    "فايبر 250 جرام": 570, "فايبر 300 جرام": 600, "فايبر 350 جرام": 630, "فايبر 400 جرام": 670
-                }
+                items: { "فايبر 100ج": 480, "فايبر 200ج": 540, "فايبر 300ج": 600, "فايبر 400ج": 670 }
             }
         };
 
-        let currentCategory = "إسفنج مراتب";
+        let db = JSON.parse(localStorage.getItem('qalyoubi_db')) || defaultData;
+        let currentCat = Object.keys(db)[0];
 
-        function setTab(cat, btn) {
-            document.querySelectorAll('.t-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            currentCategory = cat;
-            
+        // المفتاح السري (كليك يمين على الخط)
+        document.getElementById('secret_key').oncontextmenu = function(e) {
+            e.preventDefault();
+            let p = prompt("كلمة السر:");
+            if (btoa(p) === "MTM1Nzkw") { // 135790
+                document.getElementById('admin-panel').style.display = 'block';
+                document.getElementById('main-app').style.display = 'none';
+                renderAdmin();
+            }
+        };
+
+        function renderTabs() {
+            const container = document.getElementById('tabs-container');
+            container.innerHTML = "";
+            Object.keys(db).forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = `t-btn ${cat === currentCat ? 'active' : ''}`;
+                btn.innerText = cat;
+                btn.onclick = () => { currentCat = cat; renderTabs(); updateProdList(); };
+                container.appendChild(btn);
+            });
+            updateProdList();
+        }
+
+        function updateProdList() {
             const sel = document.getElementById('sel_prod');
             sel.innerHTML = "";
-            for (let name in pricing[cat].items) {
-                let op = document.createElement('option');
-                op.value = pricing[cat].items[name];
-                op.innerText = name;
-                sel.appendChild(op);
+            for (let item in db[currentCat].items) {
+                let opt = document.createElement('option');
+                opt.value = db[currentCat].items[item];
+                opt.innerText = item;
+                sel.appendChild(opt);
             }
-
-            document.getElementById('m3_box').style.display = pricing[cat].unit === 'm3' ? 'block' : 'none';
-            document.getElementById('mtr_box').style.display = pricing[cat].unit === 'meter' ? 'block' : 'none';
+            updateUI();
         }
 
-        function calculateFinal() {
-            const sel = document.getElementById('sel_prod');
-            const rate = parseFloat(sel.value);
-            const itemName = sel.options[sel.selectedIndex].text;
-            
+        function updateUI() {
+            const unit = db[currentCat].unit;
+            document.getElementById('m3_box').style.display = unit === 'm3' ? 'block' : 'none';
+            document.getElementById('mtr_box').style.display = unit === 'meter' ? 'block' : 'none';
+        }
+
+        function calculate() {
+            const rate = parseFloat(document.getElementById('sel_prod').value);
             let total = 0;
-            let details = "";
-
-            if (pricing[currentCategory].unit === 'm3') {
-                const l = parseFloat(document.getElementById('dim_l').value) || 0;
-                const w = parseFloat(document.getElementById('dim_w').value) || 0;
-                const t = parseFloat(document.getElementById('dim_t').value) || 0;
+            if (db[currentCat].unit === 'm3') {
+                const l = document.getElementById('dim_l').value, w = document.getElementById('dim_w').value, t = document.getElementById('dim_t').value;
                 total = (l * w * t / 1000000) * rate;
-                details = `المقاس المختار: ${l}x${w}x${t} سم`;
             } else {
-                const q = parseFloat(document.getElementById('dim_q').value) || 0;
-                total = q * rate;
-                details = `الكمية المطلوبة: ${q} متر`;
+                total = document.getElementById('dim_q').value * rate;
             }
-
-            if (total <= 0) { alert("يرجى التأكد من المقاسات"); return; }
-
-            const formattedPrice = Math.round(total).toLocaleString();
-            document.getElementById('total_val').innerText = formattedPrice;
+            document.getElementById('total_val').innerText = Math.round(total).toLocaleString();
             document.getElementById('final-panel').style.display = 'block';
-
-            const waText = `مرحباً، أريد الاستفسار عن الطلب التالي:\n\n*المنتج:* ${itemName}\n*المواصفات:* ${details}\n*إجمالي القيمة:* ${formattedPrice} جنيه مصري\n\nشكراً لكم.`;
             
-            document.getElementById('wa_1').href = `https://wa.me/201003316023?text=${encodeURIComponent(waText)}`;
-            document.getElementById('wa_2').href = `https://wa.me/201012381893?text=${encodeURIComponent(waText)}`;
-            
-            window.scrollBy({ top: 400, behavior: 'smooth' });
+            const msg = encodeURIComponent(`طلب من مركز القليوبي:\nالقسم: ${currentCat}\nالصنف: ${document.getElementById('sel_prod').options[document.getElementById('sel_prod').selectedIndex].text}\nالقيمة: ${Math.round(total)} ج.م`);
+            document.getElementById('wa_1').href = `https://wa.me/201003316023?text=${msg}`;
+            document.getElementById('wa_2').href = `https://wa.me/201012381893?text=${msg}`;
         }
 
-        setTab('إسفنج مراتب', document.querySelector('.t-btn'));
+        // وظائف الإدارة
+        function renderAdmin() {
+            const editor = document.getElementById('admin-editor');
+            editor.innerHTML = "";
+            for (let cat in db) {
+                let sec = document.createElement('div');
+                sec.className = "admin-section";
+                sec.innerHTML = `<h3 style="color:var(--premium-gold)">قسم: ${cat} <button class="btn-del" onclick="deleteCat('${cat}')">حذف القسم</button></h3>`;
+                
+                for (let item in db[cat].items) {
+                    let div = document.createElement('div');
+                    div.className = "admin-item";
+                    div.innerHTML = `<span>${item}</span> <div><input type="number" value="${db[cat].items[item]}" onchange="updatePrice('${cat}','${item}',this.value)"> <button class="btn-del" onclick="deleteItem('${cat}','${item}')">x</button></div>`;
+                    sec.appendChild(div);
+                }
+                
+                let addBox = document.createElement('div');
+                addBox.innerHTML = `<input type="text" id="new_item_${cat}" placeholder="اسم صنف جديد" style="width:150px;"> <input type="number" id="new_price_${cat}" placeholder="السعر" style="width:80px;"> <button class="btn-add" onclick="addItem('${cat}')">إضافة صنف</button>`;
+                sec.appendChild(addBox);
+                editor.appendChild(sec);
+            }
+        }
+
+        function updatePrice(c, i, v) { db[c].items[i] = parseFloat(v); save(); }
+        function deleteItem(c, i) { delete db[c].items[i]; save(); renderAdmin(); }
+        function deleteCat(c) { if(confirm('حذف القسم بالكامل؟')) { delete db[c]; save(); renderAdmin(); } }
+        
+        function addItem(c) {
+            let n = document.getElementById(`new_item_${c}`).value;
+            let p = document.getElementById(`new_price_${c}`).value;
+            if(n && p) { db[c].items[n] = parseFloat(p); save(); renderAdmin(); }
+        }
+
+        function addNewCategory() {
+            let n = document.getElementById('new_cat_name').value;
+            let u = document.getElementById('new_cat_unit').value;
+            if(n) { db[n] = { unit: u, items: {} }; save(); renderAdmin(); }
+        }
+
+        function save() { localStorage.setItem('qalyoubi_db', JSON.stringify(db)); }
+
+        renderTabs();
     </script>
 </body>
 </html>
