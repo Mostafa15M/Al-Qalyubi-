@@ -73,7 +73,7 @@
         .sh-color { background: #1a4d2e; border: 1px solid #2ecc71; }
         .mz-color { background: #1a3a5f; border: 1px solid #3498db; }
 
-        /* لوحة الإدارة */
+        /* Admin Panel */
         #admin-panel { display: none; max-width: 850px; margin: 20px auto; padding: 30px; background: #080808; border: 1px solid var(--premium-gold); border-radius: 25px; text-align: right; }
         .admin-section { background: #111; padding: 20px; border-radius: 15px; margin-bottom: 20px; border: 1px solid #222; }
         .admin-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding: 10px; border-bottom: 1px solid #222; }
@@ -160,7 +160,7 @@
     <footer>مركز القليوبي - جميع الحقوق محفوظة 2026</footer>
 
     <script>
-        // --- إعدادات Firebase الخاصة بمشروعك ---
+        // إعدادات Firebase
         const firebaseConfig = {
           apiKey: "AIzaSyB3M980vSp8j1aXjZdWzZlgzTHL3aNYKDs",
           authDomain: "qalyoubi-app-73d64.firebaseapp.com",
@@ -177,7 +177,6 @@
         let db = {};
         let currentCat = "";
 
-        // جلب البيانات من السيرفر لحظياً
         dbRef.on('value', (snapshot) => {
             db = snapshot.val() || {};
             document.getElementById('loading-spinner').style.display = 'none';
@@ -190,7 +189,6 @@
             if(document.getElementById('admin-panel').style.display === 'block') renderAdmin();
         });
 
-        // زر السير (اضغط كليك يمين أو لمسة طويلة على الخط تحت العنوان)
         document.getElementById('secret_key').oncontextmenu = function(e) {
             e.preventDefault();
             let p = prompt("كلمة سر الإدارة:");
@@ -240,15 +238,18 @@
             const sel = document.getElementById('sel_prod');
             const rate = parseFloat(sel.value) || 0;
             let total = 0;
+            let dimensionsText = ""; 
 
             if (db[currentCat].unit === 'm3') {
                 const l = parseFloat(document.getElementById('dim_l').value) || 0;
                 const w = parseFloat(document.getElementById('dim_w').value) || 0;
                 const t = parseFloat(document.getElementById('dim_t').value) || 0;
                 total = (l * w * t / 1000000) * rate;
+                dimensionsText = `المقاس: ${l}سم طول × ${w}سم عرض × ${t}سم تخانة`;
             } else {
                 const q = parseFloat(document.getElementById('dim_q').value) || 0;
                 total = q * rate;
+                dimensionsText = `الكمية: ${q} متر`;
             }
 
             const finalPrice = Math.round(total);
@@ -256,13 +257,21 @@
             document.getElementById('final-panel').style.display = 'block';
             
             const prodText = sel.options[sel.selectedIndex].text;
-            const msg = encodeURIComponent(`استفسار من الموقع:\nالقسم: ${currentCat}\nالصنف: ${prodText}\nالسعر الإجمالي: ${finalPrice} ج.م`);
             
-            document.getElementById('wa_1').href = `https://wa.me/201003316023?text=${msg}`;
-            document.getElementById('wa_2').href = `https://wa.me/201012381893?text=${msg}`;
+            // صياغة الرسالة المطلوبة يا عاطف
+            const msgBody = `استفسار من موقع القليوبي:\n` +
+                            `القسم: ${currentCat}\n` +
+                            `الصنف: ${prodText}\n` +
+                            `${dimensionsText}\n` +
+                            `السعر الإجمالي: ${finalPrice} ج.م`;
+            
+            const encodedMsg = encodeURIComponent(msgBody);
+            
+            document.getElementById('wa_1').href = `https://wa.me/201003316023?text=${encodedMsg}`;
+            document.getElementById('wa_2').href = `https://wa.me/201012381893?text=${encodedMsg}`;
         }
 
-        // --- وظائف لوحة التحكم ---
+        // وظائف لوحة التحكم
         function renderAdmin() {
             const editor = document.getElementById('admin-editor');
             editor.innerHTML = "";
